@@ -12,12 +12,17 @@ export default function GuestsMain() {
   const [, setLocation] = useLocation();
   const [currentView, setCurrentView] = useState<ViewMode>('main');
   const [selectedGuestId, setSelectedGuestId] = useState<string>('');
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const handleSidebarClick = (item: string) => {
     if (item === 'dashboard') {
       setLocation('/dashboard');
     }
     // Add other navigation handlers as needed
+  };
+
+  const handleSidebarToggle = () => {
+    setSidebarCollapsed(!sidebarCollapsed);
   };
 
   const handleViewProfile = (guestId: string) => {
@@ -47,8 +52,13 @@ export default function GuestsMain() {
   if (currentView === 'profile') {
     return (
       <div className="flex h-screen bg-gray-100">
-        <Sidebar activeItem="guests" onItemClick={handleSidebarClick} />
-        <div className="flex-1 relative">
+        <Sidebar 
+          activeItem="guests" 
+          onItemClick={handleSidebarClick}
+          isCollapsed={sidebarCollapsed}
+          onToggle={handleSidebarToggle}
+        />
+        <div className={`flex-1 relative transition-all duration-300 ${sidebarCollapsed ? 'ml-16' : 'ml-64'}`}>
           <GuestsPage
             onViewProfile={handleViewProfile}
             onViewAnalytics={handleViewAnalytics}
@@ -69,8 +79,13 @@ export default function GuestsMain() {
   if (currentView === 'analytics') {
     return (
       <div className="flex h-screen bg-gray-100">
-        <Sidebar activeItem="guests" onItemClick={handleSidebarClick} />
-        <div className="flex-1">
+        <Sidebar 
+          activeItem="guests" 
+          onItemClick={handleSidebarClick}
+          isCollapsed={sidebarCollapsed}
+          onToggle={handleSidebarToggle}
+        />
+        <div className={`flex-1 transition-all duration-300 ${sidebarCollapsed ? 'ml-16' : 'ml-64'}`}>
           <CustomerAnalytics onBack={handleBackToMain} />
         </div>
       </div>
@@ -81,8 +96,13 @@ export default function GuestsMain() {
   if (currentView === 'triggers') {
     return (
       <div className="flex h-screen bg-gray-100">
-        <Sidebar activeItem="guests" onItemClick={handleSidebarClick} />
-        <div className="flex-1">
+        <Sidebar 
+          activeItem="guests" 
+          onItemClick={handleSidebarClick}
+          isCollapsed={sidebarCollapsed}
+          onToggle={handleSidebarToggle}
+        />
+        <div className={`flex-1 transition-all duration-300 ${sidebarCollapsed ? 'ml-16' : 'ml-64'}`}>
           <MarketingTriggers onBack={handleBackToMain} />
         </div>
       </div>
@@ -92,8 +112,13 @@ export default function GuestsMain() {
   // Main guests view
   return (
     <div className="flex h-screen bg-gray-100">
-      <Sidebar activeItem="guests" onItemClick={handleSidebarClick} />
-      <div className="flex-1">
+      <Sidebar 
+        activeItem="guests" 
+        onItemClick={handleSidebarClick}
+        isCollapsed={sidebarCollapsed}
+        onToggle={handleSidebarToggle}
+      />
+      <div className={`flex-1 transition-all duration-300 ${sidebarCollapsed ? 'ml-16' : 'ml-64'}`}>
         <GuestsPage
           onViewProfile={handleViewProfile}
           onViewAnalytics={handleViewAnalytics}
