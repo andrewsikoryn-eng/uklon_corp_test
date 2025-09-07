@@ -1,0 +1,86 @@
+Design and build a new tab called "Guests" inside an existing corporate dashboard UI for a food delivery platform (Uklon Delivery). This new section functions as a mini-CRM for small restaurants using Uklon Delivery to manage and analyze their customers.
+Use responsive layout with clear visual hierarchy and modern UI components (cards, tables, filters, buttons, etc.).
+Build the interface using React + Tailwind or equivalent modern stack (or plain HTML/CSS/JS if preferred).
+
+🧩 The "Guests" tab should include the following:
+1. Main Guests Table (default view)
+
+Columns:
+
+Guest Name
+
+Phone Number
+
+Number of Orders
+
+Total Spend (₴)
+
+Last Order Date
+
+Segment (from Kyivstar)
+
+Button: “Details” → opens guest profile
+
+Filters:
+
+Segment (dropdown): “Office worker”, “Student”, “Parent”, “Night user” (aggregated via Kyivstar big data)
+
+Activity: last order >14 days / >30 days
+
+Spend: slider or input (e.g., > ₴500)
+
+Geographic filters (popular delivery zones)
+
+Button: “Customer Analytics” → opens group analytics view
+
+2. Guest Profile (on Details click)
+
+Sections:
+
+Basic Info: Name, Phone, Order History (list of past orders)
+
+Favorite Delivery Addresses (map or list)
+
+Order Frequency & Average Check
+
+Geo-pattern: Home vs Work deliveries
+
+Behavioral Pattern (aggregated): Evening user / Lunch buyer etc.
+
+Button: “Set up trigger” → open push automation
+
+3. Customer Analytics View (group-level insights)
+
+Aggregated data based on Uklon + Kyivstar big data:
+
+Heatmap of delivery areas
+
+Activity by time of day (morning, afternoon, evening, night)
+
+Distribution by segments (pie chart or bar)
+
+Example: 40% “Office workers”, 25% “Parents”, etc.
+
+Spending behavior by group
+
+4. Marketing Triggers Module
+
+View active triggers (list view)
+
+Create new trigger:
+
+Trigger type: “No orders in 30 days”, “High spender”, “New user”
+
+Condition: select rules and thresholds
+
+Message template (editable)
+
+Channel: Push or SMS
+
+Preview + Save
+
+Results tab:
+
+Campaigns sent
+
+Open rate, CTR, conversion (orders), ROI
