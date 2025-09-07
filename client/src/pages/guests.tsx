@@ -16,6 +16,8 @@ interface Guest {
   deliveryZone: string;
 }
 
+type CustomerStatus = 'active' | 'at-risk' | 'inactive';
+
 interface GuestsPageProps {
   onViewProfile: (guestId: string) => void;
   onViewAnalytics: () => void;
@@ -79,6 +81,32 @@ export default function GuestsPage({ onViewProfile, onViewAnalytics, onViewTrigg
       case "Parent": return "bg-purple-100 text-purple-800";
       case "Night user": return "bg-orange-100 text-orange-800";
       default: return "bg-gray-100 text-gray-800";
+    }
+  };
+
+  const getCustomerStatus = (lastOrderDate: string): CustomerStatus => {
+    const lastOrder = new Date(lastOrderDate);
+    const now = new Date();
+    const daysDiff = Math.floor((now.getTime() - lastOrder.getTime()) / (1000 * 3600 * 24));
+    
+    if (daysDiff < 14) return 'active';
+    if (daysDiff <= 30) return 'at-risk';
+    return 'inactive';
+  };
+
+  const getStatusColor = (status: CustomerStatus) => {
+    switch (status) {
+      case 'active': return "bg-green-100 text-green-800";
+      case 'at-risk': return "bg-yellow-100 text-yellow-800";
+      case 'inactive': return "bg-red-100 text-red-800";
+    }
+  };
+
+  const getStatusText = (status: CustomerStatus) => {
+    switch (status) {
+      case 'active': return "Активний";
+      case 'at-risk': return "Під ризиком";
+      case 'inactive': return "Неактивний";
     }
   };
 
@@ -266,6 +294,9 @@ export default function GuestsPage({ onViewProfile, onViewAnalytics, onViewTrigg
                   Останнє замовлення
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Статус
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Сегмент
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -276,12 +307,14 @@ export default function GuestsPage({ onViewProfile, onViewAnalytics, onViewTrigg
             <tbody className="bg-white divide-y divide-gray-200">
               {filteredGuests.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="px-6 py-8 text-center text-gray-500">
+                  <td colSpan={8} className="px-6 py-8 text-center text-gray-500">
                     Гостей не знайдено
                   </td>
                 </tr>
               ) : (
-                filteredGuests.map((guest) => (
+                filteredGuests.map((guest) => {
+                  const customerStatus = getCustomerStatus(guest.lastOrderDate);
+                  return (
                   <tr key={guest.id} data-testid={`guest-row-${guest.id}`}>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm font-medium text-gray-900" data-testid={`guest-name-${guest.id}`}>
@@ -313,6 +346,14 @@ export default function GuestsPage({ onViewProfile, onViewAnalytics, onViewTrigg
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <Badge 
+                        className={getStatusColor(getCustomerStatus(guest.lastOrderDate))}
+                        data-testid={`guest-status-${guest.id}`}
+                      >
+                        {getStatusText(getCustomerStatus(guest.lastOrderDate))}
+                      </Badge>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <Badge 
                         className={getSegmentColor(guest.segment)}
                         data-testid={`guest-segment-${guest.id}`}
                       >
@@ -332,7 +373,8 @@ export default function GuestsPage({ onViewProfile, onViewAnalytics, onViewTrigg
                       </Button>
                     </td>
                   </tr>
-                ))
+                  );
+                })
               )}
             </tbody>
           </table>
