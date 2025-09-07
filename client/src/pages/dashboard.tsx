@@ -9,6 +9,7 @@ export default function Dashboard() {
   const [, setLocation] = useLocation();
   const [activeItem, setActiveItem] = useState('dashboard');
   const [dateRange] = useState('19.06.2023 - 19.06.2023');
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   // Sample data matching the screenshot
   const statsData = {
@@ -39,12 +40,21 @@ export default function Dashboard() {
     }
   };
 
+  const handleSidebarToggle = () => {
+    setSidebarCollapsed(!sidebarCollapsed);
+  };
+
   return (
     <div className="flex h-screen bg-gray-100">
-      <Sidebar activeItem={activeItem} onItemClick={handleSidebarClick} />
+      <Sidebar 
+        activeItem={activeItem} 
+        onItemClick={handleSidebarClick}
+        isCollapsed={sidebarCollapsed}
+        onToggle={handleSidebarToggle}
+      />
       
       {/* Main Content */}
-      <div className="flex-1 flex flex-col bg-white">
+      <div className={`flex-1 flex flex-col bg-white transition-all duration-300 ${sidebarCollapsed ? 'ml-16' : 'ml-64'}`}>
         {/* Header */}
         <div className="bg-white border-b border-gray-200 px-8 py-6">
           <div className="flex items-center justify-between">
@@ -53,7 +63,7 @@ export default function Dashboard() {
                 className="text-2xl font-semibold text-gray-900"
                 data-testid="page-title"
               >
-                Статистика LP corp
+                Аналітика закладу - Китайський Пельмень 🥟
               </h1>
               <p className="text-sm text-gray-500 mt-1">Дані за</p>
             </div>
