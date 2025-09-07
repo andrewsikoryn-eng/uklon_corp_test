@@ -1,0 +1,52 @@
+Add two new features to the existing “Guests” section of the Uklon Delivery corporate dashboard.
+All styling should follow the current system design. Do not change any existing structure, components, or styles unless explicitly required by the two features below.
+
+🧠 Feature 1: AI-Powered Summary for Restaurants
+Purpose:
+
+Help restaurant managers get instant insights into their customer base and performance without needing to interpret charts or tables.
+
+Implementation details:
+
+Add a “Summary” block to the top of the Analytics page (/guests/analytics) or as a separate tab inside it.
+
+This block should fetch an AI-generated summary from the OpenAI GPT-4 API, based on key data metrics from the guest analytics (number of guests, orders, revenue, segments, activity time, etc.).
+
+Example summary output:
+This month, you had 113 active guests with 364 orders. Most revenue came from the "Parent" segment. Activity peaks between 11:00–15:00. Your average check is higher than other restaurants in Pechersk. Consider reactivating "Night users" with a dedicated evening promotion.
+
+Technical notes:
+
+Use fetch() or axios to make a request to a new internal API endpoint (or call OpenAI API directly from the frontend if needed).
+
+Keep the prompt for OpenAI in the code clearly editable.
+
+If no data is available, show placeholder text (“Summary will appear here once data is available.”).
+
+🟡 Feature 2: Customer Status Tags (in Guest Table)
+Purpose:
+
+Allow restaurant users to instantly understand the health of each guest relationship via color-coded status tags.
+
+Add a new column to the guest table (on /guests) called: Status.
+Logic:
+
+🟢 Active → last order was less than 14 days ago
+
+🟡 At risk → last order was between 14 and 30 days ago
+
+🔴 Inactive → last order was more than 30 days ago
+
+Visuals:
+
+Use colored pills/badges (same style as “Segment” pills).
+
+Place the tag next to or below the “Last Order Date” column, or in a new column if layout allows.
+
+📌 Important constraints:
+
+Do not change any existing filters, views, cards, or logic.
+
+Do not alter the existing marketing triggers or analytics layout.
+
+All components should inherit the existing design system and spacing.

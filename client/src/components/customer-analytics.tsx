@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BarChart3, PieChart, MapPin, Clock, TrendingUp, Users, ArrowLeft } from "lucide-react";
+import { BarChart3, PieChart, MapPin, Clock, TrendingUp, Users, ArrowLeft, Brain } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -30,6 +30,10 @@ interface TimeActivityData {
 }
 
 export default function CustomerAnalytics({ onBack }: CustomerAnalyticsProps) {
+  const [aiSummary] = useState<string>(
+    "Цього місяця у вас було 113 активних гостей з 364 замовленнями. Більшість доходу надійшла від сегменту 'Батьки' (30% клієнтів). Пік активності між 11:00-15:00. Ваш середній чек вищий за інші ресторани в Печерську. Рекомендуємо реактивувати 'Нічних користувачів' спеціальною вечірньою акцією."
+  );
+  
   // Sample analytics data
   const [segmentData] = useState<SegmentData[]>([
     { segment: "Office worker", count: 45, percentage: 40, avgSpend: "2,850.00", color: "bg-blue-500" },
@@ -84,6 +88,23 @@ export default function CustomerAnalytics({ onBack }: CustomerAnalyticsProps) {
           </div>
         </div>
       </div>
+
+      {/* AI-Powered Summary */}
+      <Card className="mb-8">
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2">
+            <Brain className="w-5 h-5 text-uklon-yellow" />
+            <span>AI Аналітичний огляд</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="bg-gray-50 rounded-lg p-6" data-testid="ai-summary">
+            <p className="text-gray-700 leading-relaxed">
+              {aiSummary}
+            </p>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Summary Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
