@@ -118,7 +118,7 @@ export default function GuestsPage({ onViewProfile, onViewAnalytics, onViewTrigg
   });
 
   return (
-    <div className="p-8 bg-gray-50 min-h-screen">
+    <div className="p-8 bg-white min-h-screen">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-3">

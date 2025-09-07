@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Calendar } from "lucide-react";
+import { useLocation } from "wouter";
 import Sidebar from "@/components/sidebar";
 import DashboardStats from "@/components/dashboard-stats";
 import ActiveOrdersTable from "@/components/active-orders-table";
 
 export default function Dashboard() {
+  const [, setLocation] = useLocation();
   const [activeItem, setActiveItem] = useState('dashboard');
   const [dateRange] = useState('19.06.2023 - 19.06.2023');
 
@@ -32,6 +34,9 @@ export default function Dashboard() {
 
   const handleSidebarClick = (item: string) => {
     setActiveItem(item);
+    if (item === 'guests') {
+      setLocation('/guests');
+    }
   };
 
   return (

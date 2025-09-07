@@ -5,7 +5,8 @@ import {
   CreditCard, 
   Users, 
   Settings, 
-  LogOut 
+  LogOut,
+  UserCheck
 } from "lucide-react";
 
 interface SidebarProps {
@@ -19,6 +20,7 @@ export default function Sidebar({ activeItem, onItemClick }: SidebarProps) {
     { id: 'orders', label: 'Замовлення', icon: Package },
     { id: 'balance', label: 'Баланс компанії', icon: CreditCard },
     { id: 'employees', label: 'Співробітники', icon: Users },
+    { id: 'guests', label: 'Гості', icon: UserCheck },
     { id: 'settings', label: 'Налаштування', icon: Settings },
   ];
 
