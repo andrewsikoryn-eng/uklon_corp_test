@@ -85,11 +85,11 @@ export default function GuestsPage({ onViewProfile, onViewAnalytics, onViewTrigg
   const filteredGuests = guests.filter(guest => {
     const matchesSearch = guest.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          guest.phoneNumber.includes(searchTerm);
-    const matchesSegment = !segmentFilter || guest.segment === segmentFilter;
+    const matchesSegment = !segmentFilter || segmentFilter === 'all' || guest.segment === segmentFilter;
     
     // Activity filter logic
     let matchesActivity = true;
-    if (activityFilter) {
+    if (activityFilter && activityFilter !== 'all') {
       const lastOrder = new Date(guest.lastOrderDate);
       const now = new Date();
       const daysDiff = Math.floor((now.getTime() - lastOrder.getTime()) / (1000 * 3600 * 24));
@@ -103,7 +103,7 @@ export default function GuestsPage({ onViewProfile, onViewAnalytics, onViewTrigg
 
     // Spend filter logic
     let matchesSpend = true;
-    if (spendFilter) {
+    if (spendFilter && spendFilter !== 'all') {
       const spend = parseFloat(guest.totalSpend.replace(/,/g, ''));
       if (spendFilter === ">500") {
         matchesSpend = spend > 500;
@@ -177,7 +177,7 @@ export default function GuestsPage({ onViewProfile, onViewAnalytics, onViewTrigg
               <SelectValue placeholder="Сегмент" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">Всі сегменти</SelectItem>
+              <SelectItem value="all">Всі сегменти</SelectItem>
               <SelectItem value="Office worker">Офісний працівник</SelectItem>
               <SelectItem value="Student">Студент</SelectItem>
               <SelectItem value="Parent">Батько</SelectItem>
@@ -191,7 +191,7 @@ export default function GuestsPage({ onViewProfile, onViewAnalytics, onViewTrigg
               <SelectValue placeholder="Активність" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">Вся активність</SelectItem>
+              <SelectItem value="all">Вся активність</SelectItem>
               <SelectItem value=">14days">Останнє замовлення {'>'} 14 днів</SelectItem>
               <SelectItem value=">30days">Останнє замовлення {'>'} 30 днів</SelectItem>
             </SelectContent>
@@ -203,7 +203,7 @@ export default function GuestsPage({ onViewProfile, onViewAnalytics, onViewTrigg
               <SelectValue placeholder="Витрати" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">Всі витрати</SelectItem>
+              <SelectItem value="all">Всі витрати</SelectItem>
               <SelectItem value=">500">{'>'} ₴500</SelectItem>
               <SelectItem value=">1000">{'>'} ₴1,000</SelectItem>
               <SelectItem value=">5000">{'>'} ₴5,000</SelectItem>
